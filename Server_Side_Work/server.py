@@ -9,13 +9,27 @@ LISTNER_LIMIT = 5
 active_clients = [] # list of all currently connected users
 
 # This function will keep listening for new client messages
-def listen_for_messages(client):
-    pass
+def listen_for_messages(client, username):
+    
+    # this while loop will wait to receive message
+    while 1:
+        response = client.recv(2048).decode('utf-8')
+        if response != '':
+            final_msg = username + '~' + response 
+            send_messages_to_all(messgage=response)
+        else:
+            print(f'Client response from {username} is empty')
+
+#function to send message to clients
+def send_message_to_client(message, client):
+    client.sendall(message.encode())
 
 # this message is required by server and when a message is sent, 
 # the server will tell every client that this message was sent by this user
-def send_messages_to_all(from_username, messgage):
-    pass
+def send_messages_to_all(message):
+    for user in active_clients:
+        send_message_to_client(message=message, client=user[1])
+
 
 #function to handle client
 def client_handler(client):
@@ -26,8 +40,12 @@ def client_handler(client):
         username = client.recv(2048).decode('utf-8')
         if username != '':
             active_clients.append((username, client))
+            # we break since we have the username already, we don't need the while loop to keep running
+            break
         else:
             print('Username is empty')
+        
+    threading.Thread(target=listen_for_messages, args=(client, username, )).start()
 
 # This is where the main function begins
 
