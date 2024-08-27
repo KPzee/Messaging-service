@@ -15,8 +15,8 @@ def listen_for_messages(client, username):
     while 1:
         response = client.recv(2048).decode('utf-8')
         if response != '':
-            final_msg = username + '~' + response 
-            send_messages_to_all(messgage=response)
+            final_msg = f'{username} ~ {response}' 
+            send_messages_to_all(message=final_msg)
         else:
             print(f'Client response from {username} is empty')
 
@@ -40,6 +40,7 @@ def client_handler(client):
         username = client.recv(2048).decode('utf-8')
         if username != '':
             active_clients.append((username, client))
+            print(f'welcome {username}!')
             # we break since we have the username already, we don't need the while loop to keep running
             break
         else:
