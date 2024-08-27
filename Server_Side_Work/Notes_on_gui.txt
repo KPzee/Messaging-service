@@ -1,0 +1,1 @@
+1. I want a button to initially allow user to login, this is a join button so we know which user is typing
