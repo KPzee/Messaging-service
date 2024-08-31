@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    <link rel="stylesheet" href="..\Css\HomePage.css">
 </head>
 <body>
-    <img src="./threelines.webp" alt="..." class="img">
+    <div id="container">
+      <input id="userInput" type="text" placeholder="Type your message">
+      <button onclick="returnText()" class="send-button">send</button>
+    </div>
+    <script type="text/javascript">
+        function returnText(){
+            let input = 
+            document.getElementById("userInput").value
+            alert(input)
+        }
 
+    </script>
 </body>
 </html>
